@@ -1,0 +1,62 @@
+Starting Apriori with 100000 transactions
+L1: 375 frequent singletons
+
+Generating C2 candidates...
+C2: 70125 candidates
+Counting support for C2...
+L2: 9 frequent itemsets | Time: 420.96s
+
+Generating C3 candidates...
+C3: 1 candidates
+Counting support for C3...
+L3: 1 frequent itemsets | Time: 0.52s
+
+Generating C4 candidates...
+C4: 0 candidates
+
+Apriori completed in 421.60s
+Total transactions: 100000
+Minimum support: 1000
+Execution time: 421.6015 seconds
+Total frequent itemsets: 385
+
+---------------------------------------------
+min_support : 2000
+Starting Apriori with 100000 transactions
+L1: 155 frequent singletons
+
+Generating C2 candidates...
+C2: 11935 candidates
+Counting support for C2...
+L2: 0 frequent itemsets | Time: 70.62s
+
+Apriori completed in 70.75s
+Total transactions: 100000
+Minimum support: 2000
+Execution time: 70.7490 seconds
+Total frequent itemsets: 155
+
+
+optimze one : 
+
+Starting Apriori with 100000 transactions
+L1: 375 frequent singletons
+
+Generating C2 candidates...
+C2: 70125 candidates
+Counting support for C2...
+L2: 9 frequent itemsets | Time: 2.12s
+
+Generating C3 candidates...
+C3: 1 candidates
+Counting support for C3...
+L3: 1 frequent itemsets | Time: 2.50s
+
+Generating C4 candidates...
+C4: 0 candidates
+
+Apriori completed in 4.82s
+Total transactions: 100000
+Minimum support: 1000
+Execution time: 4.8169 seconds
+Total frequent itemsets: 385

@@ -1,7 +1,7 @@
 
 from collections import Counter
 from itertools import combinations
-
+import time
 
 def find_frequent_singletons(transactions, min_support):
     item_counts = Counter()
@@ -47,15 +47,15 @@ def generate_candidates(previous_frequent, k):
     return candidates
 
 
-def count_candidate_support(transactions, candidates):
-    counts = Counter()
+# def count_candidate_support(transactions, candidates):
+#     counts = Counter()
 
-    for basket in transactions:
-        for candidate in candidates:
-            if candidate.issubset(basket):
-                counts[candidate] += 1
+#     for basket in transactions:
+#         for candidate in candidates:
+#             if candidate.issubset(basket):
+#                 counts[candidate] += 1
 
-    return counts
+#     return counts
 
 
 
@@ -70,32 +70,78 @@ def filter_frequent(counts, min_support):
 
 
 def apriori(transactions, min_support):
-    # Step 1: Find frequent singletons
+    start = time.perf_counter()
+
+    print(f"Starting Apriori with {len(transactions)} transactions",
+          flush=True)
+
+    # Pass 1: Frequent singletons
     frequent = find_frequent_singletons(
         transactions, min_support
     )
+
+    print(f"L1: {len(frequent)} frequent singletons", flush=True)
 
     all_frequent = dict(frequent)
     k = 2
 
     while frequent:
-        # Generate candidates of size k
+        iteration_start = time.perf_counter()
+
+        print(f"\nGenerating C{k} candidates...", flush=True)
+
         candidates = generate_candidates(frequent, k)
+
+        print(f"C{k}: {len(candidates)} candidates", flush=True)
 
         if not candidates:
             break
 
-        # Count support
+        print(f"Counting support for C{k}...", flush=True)
+
         counts = count_candidate_support(
             transactions, candidates
         )
 
-        # Keep only frequent itemsets
         frequent = filter_frequent(counts, min_support)
 
-        # Store discovered frequent itemsets
-        all_frequent.update(frequent)
+        elapsed = time.perf_counter() - iteration_start
 
+        print(
+            f"L{k}: {len(frequent)} frequent itemsets "
+            f"| Time: {elapsed:.2f}s",
+            flush=True
+        )
+
+        all_frequent.update(frequent)
         k += 1
 
+    total_time = time.perf_counter() - start
+
+    print(f"\nApriori completed in {total_time:.2f}s", flush=True)
+
     return all_frequent
+
+
+def count_candidate_support(transactions, candidates):
+    counts = Counter()
+
+    if not candidates:
+        return counts
+
+    # Get candidate size (2 for pairs, 3 for triples, etc.)
+    k = len(next(iter(candidates)))
+
+    for basket in transactions:
+        if len(basket) < k:
+            continue
+
+        # Generate combinations from the basket
+        for combination in combinations(basket, k):
+            candidate = frozenset(combination)
+
+            # Check candidate using hash-set lookup
+            if candidate in candidates:
+                counts[candidate] += 1
+
+    return counts
