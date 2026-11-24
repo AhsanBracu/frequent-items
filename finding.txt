@@ -60,3 +60,40 @@ Total transactions: 100000
 Minimum support: 1000
 Execution time: 4.8169 seconds
 Total frequent itemsets: 385
+
+
+task 1 & 2 with optimizer
+
+
+Starting Apriori with 100000 transactions
+L1: 375 frequent singletons
+
+Generating C2 candidates...
+C2: 70125 candidates
+Counting support for C2...
+L2: 9 frequent itemsets | Time: 2.35s
+
+Generating C3 candidates...
+C3: 1 candidates
+Counting support for C3...
+L3: 1 frequent itemsets | Time: 2.50s
+
+Generating C4 candidates...
+C4: 0 candidates
+
+Apriori completed in 4.99s
+
+===== TASK 1: APRIORI =====
+Total transactions: 100000
+Minimum support: 1000
+Frequent itemsets: 385
+Execution time: 4.9931s
+
+===== TASK 2: ASSOCIATION RULES =====
+Minimum confidence: 70%
+Total valid rules: 3
+Execution time: 0.0001s
+[704, 825] -> [39] | Support: 1035 | Confidence: 93.92%
+[39, 704] -> [825] | Support: 1035 | Confidence: 93.50%
+[39, 825] -> [704] | Support: 1035 | Confidence: 87.19%
+
