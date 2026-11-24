@@ -42,6 +42,17 @@ python3 main.py -s 500 -c 0.8      # same thing, shorter
 
 If support isn't a positive whole number, or confidence isn't between 0 and 1, the program stops and tells you why.
 
+### With make
+
+There's also a Makefile, if you'd rather not type the full command:
+
+```bash
+make run                                  # defaults: support 1000, confidence 0.7
+make run SUPPORT=500 CONFIDENCE=0.8       # your own values
+make test                                 # run the unit tests
+make clean                                # delete Python cache files
+```
+
 ## What you'll see
 
 While A-Priori runs, it prints how many candidates it built at each level, how many turned out to be frequent and how long that level took. After that you get a summary of each task and the rules, sorted by confidence. A default run looks like this:
@@ -77,6 +88,7 @@ There are 13 tests covering the data loader, the A-Priori steps and rule generat
 
 ```
 main.py                    reads the options, runs both tasks, prints results
+Makefile                   shortcuts for running, testing and cleaning up
 src/data_loader.py         turns the .dat file into a list of sets
 src/apriori.py             Task 1: A-Priori
 src/association_rules.py   Task 2: rule generation
