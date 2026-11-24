@@ -1,4 +1,5 @@
 
+import argparse
 import time
 
 from src.association_rules import generate_association_rules
@@ -43,11 +44,41 @@ from src.apriori import apriori
 # Optimized support-counting implementation
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Find frequent itemsets with A-Priori and "
+                    "generate association rules."
+    )
+    parser.add_argument(
+        "-s", "--support",
+        type=int,
+        default=1000,
+        help="minimum support as a basket count (default: 1000)"
+    )
+    parser.add_argument(
+        "-c", "--confidence",
+        type=float,
+        default=0.7,
+        help="minimum confidence between 0 and 1 (default: 0.7)"
+    )
+    args = parser.parse_args()
+
+    if args.support < 1:
+        parser.error("--support must be a positive integer")
+    if not 0 < args.confidence <= 1:
+        parser.error("--confidence must be in the range (0, 1]")
+
+    return args
+
+
 def main():
+    args = parse_args()
+
     transactions = load_transactions("data/T10I4D100K.dat")
 
-    min_support = 1000
-    min_confidence = 0.7
+    # Thresholds from the command line
+    min_support = args.support
+    min_confidence = args.confidence
 
     # Task 1: Find frequent itemsets
     start_time = time.perf_counter()
